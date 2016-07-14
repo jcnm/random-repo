@@ -1,11 +1,23 @@
 package com.lunatech.qnr.model.entities
 
-import com.lunatech.qnr.mode.BaseEntity
 
-final class Airport(givenId: Int, givenName: String, givenISO: String)
-    extends BaseEntity(givenId) {
-  val name = givenName
-  val isoName = givenISO
-  override def toString() = "Airport {id:$id, name:$name, iso:$isoName}"
+/// Scala exclusive feature here, breaks Java compatibility
+final object AirportKind extends Enumeration{
+  val Closed, Heliport, SeaPlane, Small, Medium, Large, Balloon = Value
+}
 
-  }
+///
+///
+final class Airport(a_id: Int, a_name: String, a_ISO: String, a_kind: AirportKind.Value)
+    extends BaseEntity(a_id) {
+  require(a_id > 0, "The airport ident should be greater than zero (0).")
+
+  val name = a_name
+  val kind = a_kind
+  val isoName = a_ISO
+//  def this() = {
+//    require(false, "An airport need an ident, name, iso code and a kind.")
+//  }
+
+  override def toString() = s"Airport {id:$id, name:$name, kind:$kind, iso:$isoName}"
+}

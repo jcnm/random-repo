@@ -7,9 +7,19 @@ Airports data from http://ourairports.com/data/ (released under public domain)
 #### Execution
 
 ```bash
-scalac Lunatech.scala
+sbt run
 ```
 
 #### Test
+```bash
+sbt test -feature
+```
 
-#
+#### API
+
+* CSVReader
+* Scala Test Spec
+
+
+
+Check build.sbt for more details
