@@ -18,5 +18,5 @@ trait DataSource[E] extends Iterable[E] {
     *  @param max the maximum data requiered
     *  @return a Success Iterable E data or Failure
     */
-  def nextData(n: Int): Try[Iterable[E]]
+//  def nextData(n: Int): Try[Iterable[E]]
 }
