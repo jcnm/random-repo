@@ -1,10 +1,12 @@
 package com.lunatech.qnr.model.entities
 
-import com.lunatech.qnr.model.BaseEntity
+///
+///
+final class Runway(a_id: Int, a_name: String, a_ISO: String)
+    extends BaseEntity(a_id) {
 
-final class Runway(givenId: Int, givenName: String, givenISO: String)
-    extends BaseEntity(givenId) {
-  val name = givenName
-  val isoName = givenISO
-  override def toString() = "Runway {id:$id, name:$name, iso:$isoName}"
-  }
+  val name = a_name
+  val isoName = a_ISO
+
+  override def toString() = s"Runway {id:$id, name:$name, iso:$isoName}"
+}

@@ -1,11 +1,12 @@
 package com.lunatech.qnr.model.entities
 
-import com.lunatech.qnr.model.BaseEntity
+///
+///
+final class Country(a_id: Int, a_name: String, a_code: String)
+    extends BaseEntity(a_id) {
 
-final class Country(givenId:Int, givenName: String, givenCode: String)
-    extends BaseEntity(givenId) {
-  protected val name: String = givenName
-  protected val code: String = givenCode
-  protected var isoName = ""
-  override def toString() = "Country {id:$id, name:$name, code:$code}"
-  }
+  protected val name: String = a_name
+  protected val code: String = a_code
+
+  override def toString() = s"Country {id:$id, name:$name, code:$code}"
+}
