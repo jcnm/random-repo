@@ -15,9 +15,6 @@ final class Airport(a_id: Int, a_name: String, a_ISO: String, a_kind: AirportKin
   val name = a_name
   val kind = a_kind
   val isoName = a_ISO
-//  def this() = {
-//    require(false, "An airport need an ident, name, iso code and a kind.")
-//  }
 
   override def toString() = s"Airport {id:$id, name:$name, kind:$kind, iso:$isoName}"
 }
