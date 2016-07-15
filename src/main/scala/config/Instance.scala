@@ -12,7 +12,7 @@ object DataOrigin extends Enumeration {
 }
 // Define Data Sort
 object DataKind extends Enumeration {
-  val Country, Runways, Airport = Value
+  val Country, Runway, Airport = Value
 }
 
 
