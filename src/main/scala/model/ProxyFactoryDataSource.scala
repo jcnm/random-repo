@@ -25,25 +25,15 @@ class ProxyFactoryDataSource[T <: Identifiable](a_origin: DataOrigin.Value, a_ki
   var source: DataSource[T] = null
   // Set to true when source reach the end of file
   var ended: Boolean = false
-  //  var base = List[E]()
-
   val sourcePath = "resources"
+  base = buildData
 
-  def retrievedData() = {
-        if (null == source) {
-      (a_origin, a_kind) match {
-        case (DataOrigin.File, DataKind.Country) =>
-          val countriesSource = new CountryFileSource(sourcePath)
-          source = countriesSource.asInstanceOf[DataSource[T]]
-          base = source.base.asInstanceOf[Iterable[T]]
-        case (DataOrigin.File, DataKind.Airport) =>
-        case (DataOrigin.File, DataKind.Runways) =>
-        case (_, _) =>
-          Try(throw new UnconsistentDataSourceException("Data origin or Data kind not yet supported"))
-      }
+  override def retrievedData() = {
+    source.retrievedData() match {
+      case Success(b) => base = b
+        Success(b)
+      case Failure(exc) => Try(throw exc)
     }
-    source.retrievedData()
-
   }
 
 /*  def nextData(n: Int) = {
@@ -62,9 +52,29 @@ class ProxyFactoryDataSource[T <: Identifiable](a_origin: DataOrigin.Value, a_ki
     source.nextData(n)
   }
  */
-  def generateSource(): DataSource[T] = {
-    new CountryFileSource(sourcePath).asInstanceOf[DataSource[T]]
+  override def buildData =
+    {
+      if (null == source) {
+        (a_origin, a_kind) match {
+          case (DataOrigin.File, DataKind.Country) =>
+            val countriesSource = new CountryFileSource(sourcePath)
+            source = countriesSource.asInstanceOf[DataSource[T]]
+            source.base.asInstanceOf[Iterable[T]]
+          case (DataOrigin.File, DataKind.Airport) =>
+            val airportsSource = new AirportFileSource(sourcePath)
+            source = airportsSource.asInstanceOf[DataSource[T]]
+            source.base.asInstanceOf[Iterable[T]]
+          case (DataOrigin.File, DataKind.Runway) =>
+          val runwaysSource = new RunwayFileSource(sourcePath)
+          source = runwaysSource.asInstanceOf[DataSource[T]]
+          source.base.asInstanceOf[Iterable[T]]
+          case (_, _) =>
+            throw new UnconsistentDataSourceException("Data origin or Data kind not yet supported")
+    }
+  } else {
+    source.base
   }
+}
 
   override def toString = s"Proxing a source of $kind from $origin"
   }

@@ -14,33 +14,28 @@ import com.lunatech.qnr.common.BreakingDataSourceException
 import com.lunatech.qnr.common.DataNotFoundException
 import com.github.tototoshi.csv.CSVReader
 
-class AirportFileSource(a_path: String)
+final class AirportFileSource(a_path: String)
     extends DataSource[Airport] {
-  var index = 0
-  var listMap:List[Map[String, String]] = null
-  val path = a_path
-  base = List[Airport]()
 
-  def retrievedData() = {
-    if(listMap == null) {
-      this.buildAirports
-    }
-    if (null == base) {
-      (throw new DataNotFoundException("Unable to retrieve data"))
-    }
-    base
-  }
+  private var listMap:List[Map[String, String]] = null
+  private val path = a_path
+  base = buildData
 
-  private def buildAirports = {
+
+  private def predKeyName =
+    {k:String =>
+    k == "id" || k == "name" || k == "ident" || k == "type" || k == "iso_country" || k == "municipality" }
+
+  protected def buildData = {
     require(listMap == null, "Call this method only to retrieve data")
     val reader = Try(CSVReader.open(s"$path/airports.csv"))
     reader match {
-      case Failure(msg) => println(msg)
-      case Success(r)   => println(s"Success $r")
+      case Failure(exc) => throw exc
+      case Success(r)   =>
         val rawData = r.asInstanceOf[CSVReader].allWithHeaders
         val emptyList = List[Map[String, String]]()
-        listMap = rawData.foldLeft(emptyList)((l, m) => m.filterKeys( p => p == "id" || p == "name" || p == "code") :: l)
-        base = listMap.map(
+        listMap = rawData.foldLeft(emptyList)((l, m) => m.filterKeys(predKeyName) :: l)
+        listMap.map(
           m =>
           (m.get("id"),
           m.get("name"),
@@ -64,7 +59,7 @@ class AirportFileSource(a_path: String)
     a_name: String,
     a_ident: String, a_country: String, a_municipality: String,
     a_sort: String) =
-    new Airport(a_id, a_name, a_ident, a_country, a_municipality, airportKind(a_sort))
+    new Airport(a_id, a_name, a_ident, a_country.toUpperCase, a_municipality, airportKind(a_sort))
 
   private def airportKind(str_kind:String): AirportKind.Value =
     str_kind match {
