@@ -11,9 +11,11 @@ sbt run
 ```
 
 #### Test
+
 ```bash
 sbt test -feature
 ```
+Note: Tests are using real data instead of using mockers and real fixtures
 
 #### API
 
