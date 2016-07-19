@@ -13,6 +13,7 @@ object Lunatech extends App {
   override def main(args: Array[String]) = {
 
     var queries = QueryController.runwaysOf("fran")
+
     println(s"Please press [Q] for Quering and [P] for Reporting $QueryController")
     QueryView.showView(queries)
     // println(s"Countries Loaded : ${countriesProxy.size}")

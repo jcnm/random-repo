@@ -24,17 +24,15 @@ class ProxyFactoryDataSource[T <: Identifiable](a_origin: DataOrigin.Value, a_ki
   val kind     = a_kind
   var source: DataSource[T] = null
   // Set to true when source reach the end of file
-  var ended: Boolean = false
   val sourcePath = "resources"
   base = buildData
 
-  override def retrievedData() = {
-    source.retrievedData() match {
+  override def retrievedData() =
+    Try(source.retrievedData() match {
       case Success(b) => base = b
-        Success(b)
-      case Failure(exc) => Try(throw exc)
-    }
-  }
+        base
+      case Failure(exc) => throw exc
+    })
 
 /*  def nextData(n: Int) = {
     if (null == source) {
