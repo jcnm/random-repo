@@ -4,7 +4,7 @@ import com.lunatech.qnr.common._
 import com.lunatech.qnr.config._
 import com.lunatech.qnr.model.ProxyFactoryDataSource
 import com.lunatech.qnr.model.entities._
-
+import scala.util.{Try,Success,Failure}
 
 object QueryController {
 
@@ -24,29 +24,29 @@ object QueryController {
     new ProxyFactoryDataSource[Runway](Instance.dataOrigin, DataKind.Runway)
 
   def countryOf(query: String) = {
+    require("" != query && " " != query,
+      "Please provide a valide country code, country name or prefix name (e.g fra for France)")
     val lcQuery = query.toLowerCase
     val ucQuery = query.toUpperCase
-    if (isCode(query)) {
+    val msg = s"No data found for your query $query"
+    Try((if (isCode(query)) {
       countriesProxy.find(c => c.code == ucQuery)
     } else {
       countriesProxy.find(c => c.name.toLowerCase.startsWith(lcQuery))
-    }
+    }).getOrElse(throw new DataNotFoundException(msg)))
   }
 
   def airportsOf(query: String) = {
     countryOf(query) match {
-      case Some(country) =>
+      case Success(country) =>
         airportsProxy.filter(a => a.isoCountry == country.code)
-      case _ =>
-        val msg = s"No data found for your query $query"
-        throw new DataNotFoundException(msg)
+      case Failure(exc) => throw exc
     }
   }
 
   def runwaysOf(query:String) = {
+    val airports = airportsOf(query) // let throw exception early
     var runwayBy = collection.mutable.Map[String, List[Runway]]() // TODO: find a way to use immutable map with ref type
-    val airports = airportsOf(query)
-
     def airportIndex(runway: Runway) =
       airports.find(airport => runway.airportRef == airport.ident) match
       {
