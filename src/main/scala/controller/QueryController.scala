@@ -23,8 +23,6 @@ object QueryController {
   val runwaysProxy =
     new ProxyFactoryDataSource[Runway](Instance.dataOrigin, DataKind.Runway)
 
-  var currentQuery: String = ""
-
   def countryOf(query: String) = {
     val lcQuery = query.toLowerCase
     val ucQuery = query.toUpperCase
@@ -71,16 +69,7 @@ object QueryController {
       }).asInstanceOf[collection.mutable.Map[String, List[Runway]]]
     }
 
-    // To complet
-    val rwfold = runwaysProxy.foldLeft(runwayBy)(rwMapGen)
-    //println(s"Group $rgroup")
-    rwfold.foreach(
-      {
-        case (k, lst) =>
-          println(s"$k")
-          lst.foreach(h => println (s"|___ $h"))
-      }
-    )
+    // Hash map computation
+    runwaysProxy.foldLeft(runwayBy)(rwMapGen)
   }
-
 }
