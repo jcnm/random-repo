@@ -11,10 +11,9 @@ object Lunatech extends App {
 
   override def main(args: Array[String]) = {
 
-    val queryDelegate = new QueryController()
-    queryDelegate.currentQuery = "FR"
-    queryDelegate.runwaysOf("FR")
-    println(s"Please press [Q] for Quering and [P] for Reporting $queryDelegate")
+    QueryController.currentQuery = "FR"
+    QueryController.runwaysOf("FR")
+    println(s"Please press [Q] for Quering and [P] for Reporting $QueryController")
     // println(s"Countries Loaded : ${countriesProxy.size}")
     // println(s"Airports Loaded : ${airportProxy.size}")
   }

@@ -49,13 +49,13 @@ final class RunwayFileSource(a_path: String)
             Some(aref),
             Some(surface),
             Some(leident)) =>
-            runwayWith(id.toInt, aref, aident, surface, leident)
+            runwayWith(id.toInt, aref.toInt, aident, surface, leident)
             case _ => throw new BreakingDataSourceException("Unable to build an Runway")
           })
     }
   }
 
-  private def runwayWith(a_id: Int, a_aref: String,
+  private def runwayWith(a_id: Int, a_aref: Int,
     a_aid: String, a_surface: String, a_leid: String) =
     new Runway(a_id, a_aref, a_aid, a_surface, a_leid)
 

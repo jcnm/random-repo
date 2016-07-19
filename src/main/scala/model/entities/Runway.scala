@@ -2,7 +2,7 @@ package com.lunatech.qnr.model.entities
 
 ///
 ///
-final class Runway(a_id: Int, a_aref: String, a_aid: String,
+final class Runway(a_id: Int, a_aref: Int, a_aid: String,
     a_surface: String, a_leident: String)
     extends BaseEntity(a_id) {
 
