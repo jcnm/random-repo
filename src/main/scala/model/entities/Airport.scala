@@ -22,6 +22,6 @@ final class Airport(a_id: Int,
   val isoName   = a_iso
   val isoCountry    = a_country
   val municipality  = a_municipality
-  
+
   override def toString() = s"Airport {id:$id, name:$name, kind:$kind, iso:$isoName}"
 }

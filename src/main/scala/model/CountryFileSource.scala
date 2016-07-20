@@ -30,7 +30,7 @@ final class CountryFileSource(a_path: String)
     val reader = Try(CSVReader.open(s"$path/countries.csv"))
     reader match {
       case Failure(exc) => throw exc
-      case Success(r)   => println(s"Success $r")
+      case Success(r)   =>
         val rawData = r.asInstanceOf[CSVReader].allWithHeaders
         val emptyList = List[Map[String, String]]()
         listMap = rawData.foldLeft(emptyList)((l, m) => m.filterKeys(predKeyName) :: l)

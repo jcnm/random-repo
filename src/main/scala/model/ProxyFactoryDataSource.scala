@@ -1,16 +1,16 @@
 package com.lunatech.qnr.model
 
-import com.lunatech.qnr.common.DataSourceException
-import com.lunatech.qnr.common.UnconsistentDataSourceException
-import com.lunatech.qnr.common.BreakingDataSourceException
-import com.lunatech.qnr.common.DataNotFoundException
-import com.lunatech.qnr.common.DataSource
+import com.lunatech.qnr.common.{
+  DataSourceException,
+  UnconsistentDataSourceException,
+  BreakingDataSourceException,
+  DataNotFoundException,
+  DataSource}
 import com.lunatech.qnr.config._
 import com.lunatech.qnr.model.entities._
 
-import scala.util.Success
-import scala.util.Failure
-import scala.util.Try
+import scala.util.{Try,Success,Failure}
+
 
 /**
   *  Given a data kind DK and a data origin DO

@@ -1,17 +1,10 @@
 package com.lunatech.qnr.model
 
-import com.lunatech.qnr.common.DataSource
-import com.lunatech.qnr.model.entities.Airport
-import com.lunatech.qnr.model.entities.AirportKind
-
+import com.lunatech.qnr.model.entities.{Airport, AirportKind}
 /// Handle optional computation
-import scala.util.Success
-import scala.util.Failure
-import scala.util.Try
+import scala.util.{Try,Success,Failure}
 
-
-import com.lunatech.qnr.common.BreakingDataSourceException
-import com.lunatech.qnr.common.DataNotFoundException
+import com.lunatech.qnr.common.{DataSource, BreakingDataSourceException, DataNotFoundException}
 import com.github.tototoshi.csv.CSVReader
 
 final class AirportFileSource(a_path: String)
