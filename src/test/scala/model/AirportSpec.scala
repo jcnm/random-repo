@@ -7,17 +7,21 @@ class AirportSpec extends FlatSpec {
 
   def fixtures  =
     new {
-      val airportOne   = new Airport(6524, "Lowel", "00AK", "US", "Villa", AirportKind.Small)
-      val airportTwo  = new Airport(6538, "Bailey", "00II", "CM", "Something", AirportKind.Small)
+      val airportOne   =
+        new Airport(6524, "Lowel", "00AK", "US", "Villa", AirportKind.Small)
+      val airportTwo  =
+        new Airport(6538, "Bailey", "00II", "CM", "Something", AirportKind.Small)
     }
 
   "Airport with id less or equals to zero (0)" should " throw IllegalArgumentException " in {
-    intercept[java.lang.IllegalArgumentException] {
-      val airportZero = new Airport(0, "fictive id zero", "No code", "CD", "Muni", AirportKind.Closed)
+    intercept[IllegalArgumentException] {
+      val airportZero =
+        new Airport(0, "fictive id zero","No code","CD","Muni",AirportKind.Closed)
     }
 
-    intercept[java.lang.IllegalArgumentException]{
-      val airportMinusOne = new Airport(-1, "fictive minus one", "", "CT", "Minicipality", AirportKind.Closed)
+    intercept[IllegalArgumentException]{
+      val airportMinusOne =
+        new Airport(-1, "fictive minus one","","CT","Minicipality",AirportKind.Closed)
     }
   }
 
