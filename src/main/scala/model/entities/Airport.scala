@@ -2,11 +2,11 @@ package com.lunatech.qnr.model.entities
 
 
 /// Scala exclusive feature here, breaks Java compatibility
-final object AirportKind extends Enumeration{
+final object AirportKind extends Enumeration {
   val Closed, Heliport, SeaPlaneBase, Small, Medium, Large, Balloon = Value
 }
 
-///
+
 ///
 final class Airport(a_id: Int,
   a_name: String,

@@ -8,20 +8,26 @@ import scala.util.{Try,Success,Failure}
 
 object QueryController {
 
+  var countriesProxy =
+    new ProxyFactoryDataSource[Country](Instance.dataOrigin, DataKind.Country)
+  var airportsProxy =
+    new ProxyFactoryDataSource[Airport](Instance.dataOrigin, DataKind.Airport)
+  var runwaysProxy =
+    new ProxyFactoryDataSource[Runway](Instance.dataOrigin, DataKind.Runway)
 
   /**
     * Assumption
-    *  a given string of lentgth 2 is a code
+    *  a given string of lentgth 2 is considered as a country iso code
     *  a given string of length >= 3 is a part or full name of a country
     **/
+
   def isCode(str: String) = str.length == 2
 
-  val countriesProxy =
-    new ProxyFactoryDataSource[Country](Instance.dataOrigin, DataKind.Country)
-  val airportsProxy =
-    new ProxyFactoryDataSource[Airport](Instance.dataOrigin, DataKind.Airport)
-  val runwaysProxy =
-    new ProxyFactoryDataSource[Runway](Instance.dataOrigin, DataKind.Runway)
+  def initWith(countries: ProxyFactoryDataSource[Country] , airports:ProxyFactoryDataSource[Airport] , runways:ProxyFactoryDataSource[Runway]) = {
+    countriesProxy= countries
+    airportsProxy = airports
+    runwaysProxy  = runways
+  }
 
   def countryOf(query: String) = {
     require("" != query && " " != query,
