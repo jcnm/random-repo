@@ -14,10 +14,22 @@ object Lunatech extends App {
 
   override def main(args: Array[String]) = {
 
-    val queries = QueryController.runwaysOf("fran")
-    println(s"Please press [Q] for Quering and [P] for Reporting $QueryController")
-    QueryView.showView(queries)
-    // println(s"Countries Loaded : ${countriesProxy.size}")
-    // println(s"Airports Loaded : ${airportProxy.size}")
-  }
+    var query = "X"
+    var quit  = false
+    do {
+      print("Please press \n\t[Q] \tfor Quering\n\t[P] \tfor Reporting \n\t[X] \tto exit\nWhat to do: ")
+      Console.readLine() match {
+        case "Q" =>
+          print("Please, enter your country query: ")
+          query = Console.readLine()
+          QueryView.showView(QueryController.runwaysOf(query))
+        case "P" =>
+          println("Report.\n")
+          ReportController.higherAirportNumberCountry(10)
+        case "X" => quit = true
+        case _ => quit = false
+      }
+      println("\n\n")
+    } while(!quit)
+      }
 }

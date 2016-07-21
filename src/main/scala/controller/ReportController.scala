@@ -23,18 +23,18 @@ object ReportController {
   }
 
   /*Naive way*/
-  def orderedAirportNumberCountry(limit: Int, f: ((Country, Int), (Country, Int)) => Boolean) {
+  def orderedAirportNumberCountry(limit: Int, f: ((Country, Int), (Country, Int)) => Boolean) = {
     val countriesWithAirportCount = countriesProxy.map( c => (c, airportsProxy.filter(a => a.isoCountry == c.code).size))
     countriesWithAirportCount.toList.sortWith(f).take(limit)
   }
 
   def higherAirportNumberCountry(limit: Int) = {
-    orderedAirportNumberCountry(limit, (a: (Country, Int), b: (Country, Int)) => a._2 > a._2)
+    orderedAirportNumberCountry(limit, (a: (Country, Int), b: (Country, Int)) => a._2 > b._2).foreach({case (a, b) => println(s"${a.name} has ${b} airports")})
   }
 
 
   def lowerAirportNumberCountry(limit: Int) = {
-    orderedAirportNumberCountry(limit, (a: (Country, Int), b: (Country, Int)) => a._2 < a._2)
+    orderedAirportNumberCountry(limit, (a: (Country, Int), b: (Country, Int)) => a._2 < b._2).foreach({case (a, b) => println(s"${a.name} has ${b} airports")})
   }
 
   /* TODO use a optimized way using on or implicit object definition ?
