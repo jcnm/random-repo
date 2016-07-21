@@ -7,7 +7,7 @@ import com.lunatech.qnr.common._
 import com.lunatech.qnr.config._
 import com.lunatech.qnr.controller._
 import com.lunatech.qnr.model.ProxyFactoryDataSource
-import com.lunatech.qnr.view.QueryView
+import com.lunatech.qnr.view.{QueryView, ReportView}
 import com.lunatech.qnr.model.entities.{Country, Airport, Runway}
 
 object Lunatech extends App {
@@ -27,12 +27,11 @@ object Lunatech extends App {
         case "P" =>
           println("Reporting.")
           println("Top ten countries by airport number descendant:")
-          ReportController.higherAirportNumberCountry(10)
+          ReportView.showOrderedCountries(ReportController.higherAirportNumberCountry(10))
           println("\nTop ten countries by airport number ascendant:")
-          ReportController.lowerAirportNumberCountry(10)
-          ReportController.runwayTypePerCountry.foreach{case (k, v) =>
-            println(s"Country $k has runway type: $v")
-          }
+          ReportView.showOrderedCountries(ReportController.lowerAirportNumberCountry(10))
+          println("\nRunways surface type per country")
+          ReportView.showRunwayTypeByCountry(ReportController.runwayTypePerCountry)
         case "X" => quit = true
         case _ => quit = false
       }
