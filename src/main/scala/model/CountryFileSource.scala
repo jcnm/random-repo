@@ -1,18 +1,11 @@
 package com.lunatech.qnr.model
 
-import com.lunatech.qnr.common.DataSource
-import com.lunatech.qnr.model.entities.Country
-
 /// Handle optional computation
-import scala.util.Success
-import scala.util.Failure
-import scala.util.Try
+import scala.util.{Success, Failure, Try}
 
-
-import com.lunatech.qnr.common.BreakingDataSourceException
-import com.lunatech.qnr.common.DataNotFoundException
-import com.lunatech.qnr.common.UnconsistentDataSourceException
-import com.github.tototoshi.csv._
+import com.lunatech.qnr.model.entities.Country
+import com.lunatech.qnr.common.{DataSource, BreakingDataSourceException, DataNotFoundException, UnconsistentDataSourceException}
+import com.github.tototoshi.csv.CSVReader
 
 final class CountryFileSource(a_path: String)
     extends DataSource[Country] {
@@ -39,7 +32,7 @@ final class CountryFileSource(a_path: String)
             case (Some(id), Some(name), Some(code)) =>
             countryWith(id.toInt, name, code)
             case _ => throw new BreakingDataSourceException("Unable to build Country")
-          })
+          }).dropRight(1) // remove the "Unknown or unassigned country" element
     }
   }
 
