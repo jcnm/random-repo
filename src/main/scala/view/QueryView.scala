@@ -13,7 +13,7 @@ object QueryView {
     {
       case (k, lst) =>
         println(s"$k")
-        lst.foreach(h => println (s"|___ $h"))
+        lst.foreach(h => println (s"\t\t|___ $h"))
     }
   }
 

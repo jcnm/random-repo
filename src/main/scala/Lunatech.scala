@@ -31,7 +31,7 @@ object Lunatech extends App {
           println("\nTop ten countries by airport number ascendant:")
           ReportView.showOrderedCountries(ReportController.lowerAirportNumberCountry(10))
           println("\nRunways surface type per country")
-          ReportView.showRunwayTypeByCountry(ReportController.runwayTypePerCountry)
+          ReportView.showRunwayTypePerCountry(ReportController.runwayTypePerCountry)
         case "X" => quit = true
         case _ => quit = false
       }

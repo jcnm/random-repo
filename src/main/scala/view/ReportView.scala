@@ -11,7 +11,7 @@ object ReportView {
     orderedCountries.foreach({case (c, airct) => println(s"${c.name} has ${airct} airports")})
   }
 
-  def showRunwayTypeByCountry(groupedCountries: Map[String, Set[String]]) = {
+  def showRunwayTypePerCountry(groupedCountries: Map[String, Set[String]]) = {
     groupedCountries.foreach({case (c, set) => println(s"${c} has ${set.size} runway types:")
       set.foreach({e => println(s"\t\t - $e")})
     })
